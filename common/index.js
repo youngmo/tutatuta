@@ -80,7 +80,7 @@ Common.prototype.killPreFighting = function(userId, callback) {
     var user = userCache.getFighting(userId);
 
     // 유저가 대전 중인지 확인
-    if(userId && !user) {
+    if(!user) {
         return callback(null, false);
     }
 
@@ -132,9 +132,7 @@ Common.prototype.killPreFighting = function(userId, callback) {
 Common.prototype.ban = function(conn) {
     var userId = conn.user;
     if (userId) {
-        var user = userCache.searchUser(userId);
-
-        this.killPreFighting(user, function(err, result) {
+        this.killPreFighting(userId, function(err, result) {
 
             // 캐쉬 청소
             userCache.removeUser(userId);
