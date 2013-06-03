@@ -75,7 +75,6 @@ Common.prototype.rewardLoser = function(user, callback) {
  */
 Common.prototype.killPreFighting = function(userId, callback) {
 
-    var userId = user.uid;
     var user = userCache.getFighting(userId);
 
     // 유저가 대전 중인지 확인
