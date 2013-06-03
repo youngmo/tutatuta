@@ -38,7 +38,7 @@ CreateUser.prototype.create = function(conn, createId, userName, userCatId, call
             return callback(err);
         }
 
-        col.findOne({$or:[{_id:userId}, {name:userName}]}, function(err, doc) {
+        col.findOne({$or:[{_id:createId}, {name:userName}]}, function(err, doc) {
             if (err) {
                 Game.lockCreate = false;
                 return callback(err);
@@ -82,7 +82,14 @@ CreateUser.prototype.create = function(conn, createId, userName, userCatId, call
                 }
 
                 Game.lockCreate = false;
-                loginService.login(doc[0]);
+
+                // 로그인까지 진행
+                loginService.login(conn, createId, function(err, result) {
+                    if (err) {
+                        return callback(err);
+                    }
+                    return callback(null, result);
+                });
             });
         });
     });
