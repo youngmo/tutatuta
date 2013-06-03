@@ -140,7 +140,7 @@ Common.prototype.ban = function(conn) {
             // 커넥션 끊기
             conn.close();
 
-            logger.debug('ban:'+ user.uid);
+            logger.debug('ban:'+ userId);
         });
     } else {
         conn.close();
