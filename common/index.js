@@ -3,6 +3,8 @@ var logger = log4js.getLogger();
 
 var userCache = require('../cache/user');
 
+var Game = require('../service/index');
+
 function Common(db) {
     this.db = db;
 }
