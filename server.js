@@ -101,7 +101,7 @@ wss.on('connection', function (conn) {
                         break;
 
                     case 'close':
-                        userCache.ban(conn);
+                        common.ban(conn);
                         break;
 
                     default :
@@ -115,7 +115,7 @@ wss.on('connection', function (conn) {
     });
 
     conn.on('close', function (code, message) {
-        userCache.ban(conn);
+        common.ban(conn);
     });
 
     conn.send('{"open":true}');
