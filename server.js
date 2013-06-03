@@ -62,7 +62,7 @@ wss.on('connection', function (conn) {
                         var userName = ms[request].id;
                         var userCatId = ms[request].catId;
 
-                        createService.create(conn, createId, userName, userCatId, function(err, result) {
+                        createUserService.create(conn, createId, userName, userCatId, function(err, result) {
                             if (err) {
                                 logger.error(err);
                                 conn.send(err);
