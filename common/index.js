@@ -112,6 +112,10 @@ Common.prototype.killPreFighting = function(userId, callback) {
 
                 return callback(null, true);
             });
+
+        } else {
+            // 상대가 봇일 경우에는 메모리에서만 삭제해줌
+            userCache.removeBot(enemy.uid);
         }
     });
 };
