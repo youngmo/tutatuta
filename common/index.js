@@ -73,12 +73,13 @@ Common.prototype.rewardLoser = function(user, callback) {
  * 유저상태를 변경하거나 커넥션을 끊지는 않음.
  * 대전중의 상대유저는 승리처리후 대기준비 상태로 이동
  */
-Common.prototype.killPreFighting = function(user, callback) {
+Common.prototype.killPreFighting = function(userId, callback) {
 
     var userId = user.uid;
+    var user = userCache.getFighting(userId);
 
     // 유저가 대전 중인지 확인
-    if(userId && !userCache.getFighting(userId)) {
+    if(userId && !user) {
         return callback(null, false);
     }
 

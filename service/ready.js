@@ -126,7 +126,7 @@ Ready.prototype.ready = function(conn, callback) {
 
     var self = this;
 
-    common.killPreFighting(user, function(err, isBanUser) {
+    common.killPreFighting(userId, function(err, isBanUser) {
         if (err) {
             return callback(err);
         }

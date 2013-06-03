@@ -60,7 +60,7 @@ Login.prototype.login = function(conn, userId, callback) {
             return callback(null, false);
         }
 
-        common.killPreFighting(user, function(err, isBanUser) {
+        common.killPreFighting(userId, function(err, isBanUser) {
             if (err) {
                 return callback(err);
             }
