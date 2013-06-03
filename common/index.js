@@ -96,6 +96,11 @@ Common.prototype.killPreFighting = function(userId, callback) {
 
         user.conn.send('{"error":"previous game was abnormal"}');
 
+        if (!enemy) {
+            // 상대가 없을 경우(어떤 이유인지간에;)
+            return callback(null, false);
+        }
+
         if (enemy.name !== Game.BOT) {
 
             // 상대는 승리처리
@@ -116,6 +121,7 @@ Common.prototype.killPreFighting = function(userId, callback) {
         } else {
             // 상대가 봇일 경우에는 메모리에서만 삭제해줌
             userCache.removeBot(enemy.uid);
+            return callback(null, true);
         }
     });
 };
