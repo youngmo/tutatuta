@@ -1,0 +1,21 @@
+{
+  "author": "an <youngmojp@yahoo.co.jp>",
+  "name": "tutatuta",
+  "description": "tutatuta server module",
+  "version": "0.0.1",
+  "homepage": "www.tutatuta.tk",
+  "repository": {
+    "url": ""
+  },
+  "dependencies": {
+    "ws": "~0.4.25",
+    "mongodb": "~1.2.8",
+    "log4js": "~0.6.6",
+    "crypto": "0.0.3"
+  },
+  "devDependencies": {},
+  "optionalDependencies": {},
+  "engines": {
+    "node": "*"
+  }
+}
