@@ -75,21 +75,21 @@ Score.prototype.rewardDraw = function(user, enemy, callback) {
         // 유저와 상대편 모두 DB갱신
         var playerList = [];
         if (enemy.name === Game.BOT) {
-            playerList.push(user.uid);
+            playerList.push(user);
         } else {
-            playerList.push(user.uid);
-            playerList.push(enemy.uid);
+            playerList.push(user);
+            playerList.push(enemy);
         }
 
         playerList.forEach(function(target) {
             // 전적 갱신
-            col.update({_id:target}, {$inc:{'record.draw':1}}, {upsert:true}, function(err) {
+            col.update({_id:target.uid}, {$inc:{'record.draw':1}}, {upsert:true}, function(err) {
                 if (err) {
                     return callback(err);
                 }
 
                 // 전적 확인
-                col.findOne({_id:target}, function(err, doc) {
+                col.findOne({_id:target.uid}, function(err, doc) {
                     if (err) {
                         return callback(err);
                     }
@@ -102,7 +102,7 @@ Score.prototype.rewardDraw = function(user, enemy, callback) {
                             draw:doc.record.draw || 0
                         }
                     };
-                    var user = userCache.getFighting(target);
+                    var user = userCache.getFighting(target.uid);
                     user.conn.send(JSON.stringify(targetMsg));
 
                     // 게임 대기상태로 이동
@@ -198,7 +198,8 @@ Score.prototype.submit = function(conn, comboCount, lastCount, callback) {
     // 상대편 집계 갱신(상대편이 이미 집계 제출을 마쳤을 경우만)
     if (!enemy.score.lock) {
         // 상대편 집계가 아직 미제출일 경우
-        return callback('{"score":"false"}');
+        user.conn.send('{"score":"false"}');
+        return callback(null, false);
     }
 
     // 유저와 상대편의 스테이지 수가 일치인지 화인
@@ -245,7 +246,7 @@ Score.prototype.submit = function(conn, comboCount, lastCount, callback) {
         if (!winner && !loser) {
 
             // 무승부일 경우
-            this.rewardDraw(user, enemy, function() {
+            this.rewardDraw(user, enemy, function(err, result) {
                 if (err) {
                     return callback(err);
                 }

@@ -11,7 +11,7 @@ function Login(db) {
     common = new Common(db);
 }
 
-Login.prototype.getUser = function(userId, callback) {
+Login.prototype._getUser = function(userId, callback) {
 
     if (!userId) {
         return callback('{"error":"please send uid"}');
@@ -42,7 +42,7 @@ Login.prototype.getUser = function(userId, callback) {
 
                 // 신규가입
             } else {
-                return callback('{"login":"false"}');
+                return callback(null, null);
             }
         });
     });
@@ -50,9 +50,14 @@ Login.prototype.getUser = function(userId, callback) {
 
 Login.prototype.login = function(conn, userId, callback) {
 
-    this.getUser(userId, function(err, user) {
+    this._getUser(userId, function(err, user) {
         if (err) {
             return callback(err);
+        }
+
+        if (!user) {
+            conn.send('{"login":"false"}');
+            return callback(null, false);
         }
 
         common.killPreFighting(user, function(err, isBanUser) {
@@ -62,7 +67,8 @@ Login.prototype.login = function(conn, userId, callback) {
 
             if (isBanUser) {
                 // 이전 게임이 비정상 종료였을 경우
-                return callback(null, false);
+                //conn.send('{"login":"false"}');
+                //return callback(null, false);
             }
 
             // 암호화(미사용)

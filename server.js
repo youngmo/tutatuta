@@ -12,12 +12,14 @@ var mongoServer = new mongodb.Server('127.0.0.1', 27017, {});
 var db = new mongodb.Db('tuta', mongoServer, {w:1});
 
 // Service
+var Common = require('./common');
 var LoginService = require('./service/login');
 var ReadyService = require('./service/ready');
 var ScoreService = require('./service/score');
 var RecordService = require('./service/record');
 var CreateUserService = require('./service/create');
 
+var common = new Common(db);
 var loginService = new LoginService(db);
 var readyService = new ReadyService(db);
 var scoreService = new ScoreService(db);
@@ -25,7 +27,6 @@ var recordService = new RecordService(db);
 var createUserService = new CreateUserService(db);
 
 var userCache = require('./cache/user');
-var common = require('./common');
 
 db.open(function(err, client) {
     if (err) {
@@ -41,8 +42,8 @@ wss.on('connection', function (conn) {
             var ms = JSON.parse(message);
             for (var request in ms) {
 
-                logger.debug('【message】' + JSON.stringify(ms));
-                userCache.printCacheInfo('conn.on');
+                logger.debug('【req】' + JSON.stringify(ms));
+                userCache.printCacheInfo('req');
 
                 switch (request) {
                     case 'login':
