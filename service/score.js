@@ -208,8 +208,8 @@ Score.prototype.submit = function(conn, comboCount, lastCount, callback) {
     }
 
     // anTest
-    logger('user: point:' + user.score.point + ',combo:' + user.score.combo + ',attack:' + user.score.attack + ',hp:' + user.score.hp);
-    logger('enemy: point:' + enemy.score.point + ',combo:' + enemy.score.combo + ',attack:' + enemy.score.attack + ',hp:' + enemy.score.hp);
+    logger.debug('user: point:' + user.score.point + ',combo:' + user.score.combo + ',attack:' + user.score.attack + ',hp:' + user.score.hp);
+    logger.debug('enemy: point:' + enemy.score.point + ',combo:' + enemy.score.combo + ',attack:' + enemy.score.attack + ',hp:' + enemy.score.hp);
     this.sendMsg(user, enemy);
 
     user.score.lock = false;
