@@ -39,6 +39,7 @@ Record.prototype.getUserRecord = function(conn, callback) {
             };
             conn.send(JSON.stringify(infoMsg));
 
+            logger.debug('record: win' + doc.record.win + ',lose:' + doc.record.lose + ',draw:' + doc.record.draw);
             return callback(null, true);
         });
     });
