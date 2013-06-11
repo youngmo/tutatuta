@@ -207,6 +207,9 @@ Score.prototype.submit = function(conn, comboCount, lastCount, callback) {
         return callback('{"error":"game error #01"}');
     }
 
+    // anTest
+    logger('user: point:' + user.score.point + ',combo:' + user.score.combo + ',attack:' + user.score.attack + ',hp:' + user.score.hp);
+    logger('enemy: point:' + enemy.score.point + ',combo:' + enemy.score.combo + ',attack:' + enemy.score.attack + ',hp:' + enemy.score.hp);
     this.sendMsg(user, enemy);
 
     user.score.lock = false;
