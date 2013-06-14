@@ -6,15 +6,11 @@ var userCache = require('../cache/user');
 var Common = require('../common');
 var common;
 
-var LoginService = require('./login');
-var loginService;
-
 var Game = require('./index');
 
 function Ready(db) {
     this.db = db;
     common = new Common(db);
-    loginService = new LoginService(db);
 }
 
 Ready.prototype._initScore = function(user) {
@@ -106,15 +102,7 @@ Ready.prototype._selectEnemy = function(user, isNpc, callback) {
 Ready.prototype.ready = function(conn, callback) {
     var userId = conn.user;
     if (!userId) {
-        //return callback('{"error":"no login"}');
-
-        // 로그인까지 진행
-        loginService.login(conn, createId, function(err, result) {
-            if (err) {
-                return callback(err);
-            }
-            return callback(null, result);
-        });
+        return callback('{"error":"no login"}');
     }
 
     // 대전중인지 확인
