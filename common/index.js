@@ -1,5 +1,6 @@
 var log4js = require('log4js');
 var logger = log4js.getLogger();
+var ws = require('ws');
 
 var userCache = require('../cache/user');
 
@@ -43,6 +44,9 @@ Common.prototype._reward = function(user, inc, callback) {
 
                     if (user.conn.readyState !== ws.OPEN) {
                         user.conn.send(JSON.stringify(msg));
+
+                    } else {
+                        logger.debug('ws.OPEN fail');
                     }
 
                     return callback(null, true);
