@@ -41,12 +41,12 @@ wss.on('error', function (error) {
 });
 
 wss.on('headers', function (headers) {
-    logger.debug('_headers_');
+    logger.debug('_headers_ :' + this._server._connections);
     logger.debug(headers);
 });
 
 wss.on('connection', function (conn) {
-    logger.debug('__connection__');
+    logger.debug('__connection__ :' + this._server._connections);
 
     conn.on('message', function (message) {
         logger.debug('__message__');
@@ -134,7 +134,7 @@ wss.on('connection', function (conn) {
     });
 
     conn.on('close', function (code, message) {
-        logger.debug('__close__');
+        logger.debug('__close__ :' + this.upgradeReq.connection.server._connections);
         logger.debug(code + ',' + message);
 
         common.ban(conn);
