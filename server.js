@@ -35,9 +35,22 @@ db.open(function(err, client) {
     }
 });
 
+wss.on('error', function (error) {
+    logger.debug('_error_');
+    logger.debug(error);
+});
+
+wss.on('headers', function (headers) {
+    logger.debug('_headers_');
+    logger.debug(headers);
+});
+
 wss.on('connection', function (conn) {
+    logger.debug('__connection__');
 
     conn.on('message', function (message) {
+        logger.debug('__message__');
+
         try {
             var ms = JSON.parse(message);
             for (var request in ms) {
@@ -115,8 +128,32 @@ wss.on('connection', function (conn) {
         }
     });
 
+    conn.on('error', function (error) {
+        logger.debug('__error__');
+        logger.debug(error);
+    });
+
     conn.on('close', function (code, message) {
+        logger.debug('__close__');
+        logger.debug(code + ',' + message);
+
         common.ban(conn);
+    });
+
+    conn.on('ping', function (data, flags) {
+        logger.debug('__ping__');
+        logger.debug(data);
+        logger.debug(flags);
+    });
+
+    conn.on('pong', function (data, flags) {
+        logger.debug('__pong__');
+        logger.debug(data);
+        logger.debug(flags);
+    });
+
+    conn.on('open', function () {
+        logger.debug('__open__');
     });
 
     conn.send('{"open":true}');
