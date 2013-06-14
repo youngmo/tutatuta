@@ -40,7 +40,11 @@ Common.prototype._reward = function(user, inc, callback) {
                             draw:doc.record.draw || 0
                         }
                     };
-                    user.conn.send(JSON.stringify(msg));
+
+                    if (user.conn.readyState !== ws.OPEN) {
+                        user.conn.send(JSON.stringify(msg));
+                    }
+
                     return callback(null, true);
                 });
             });
