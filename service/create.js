@@ -7,7 +7,7 @@ var Common = require('../common');
 var common;
 
 var LoginService = require('./login');
-var loginService
+var loginService;
 
 var Game = require('./index');
 
