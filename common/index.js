@@ -42,7 +42,7 @@ Common.prototype._reward = function(user, inc, callback) {
                         }
                     };
 
-                    if (user.conn.readyState !== ws.OPEN) {
+                    if (user.conn.readyState === ws.OPEN) {
                         user.conn.send(JSON.stringify(msg));
 
                     } else {
